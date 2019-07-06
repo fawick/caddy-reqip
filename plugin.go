@@ -5,8 +5,8 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/mholt/caddy"
-	"github.com/mholt/caddy/caddyhttp/httpserver"
+	"github.com/caddyserver/caddy"
+	"github.com/caddyserver/caddy/caddyhttp/httpserver"
 )
 
 func init() {
@@ -50,7 +50,7 @@ type Handler struct {
 }
 
 func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) (int, error) {
-	if !httpserver.Path(r.URL.Path).Matches(h.BasePath) {
+	if r.URL.Path != h.BasePath {
 		return h.Next.ServeHTTP(w, r)
 	}
 
